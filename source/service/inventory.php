@@ -1,8 +1,13 @@
 <?php
 
+include('../source/object/item.php');
+
 class InventoryService {
 
     public function get() {
+
+        // new up Item() obj
+
         return array (
             [
                 'id' => 123,
