@@ -10,7 +10,7 @@ if (array_key_exists(5, $parts)) {
     $id = $parts[5] == '' ? null : $parts[5];
 }
 
-$service = 0;
+$service = null;
 
 $allowed_gateways = ['inventory'];
 
