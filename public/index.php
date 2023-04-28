@@ -1,13 +1,17 @@
 <?php
 
-$parts = explode('/', $_SERVER['REQUEST_URI']);
+$filtered_request_uri = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
 
-$requested_gateway = strtolower($parts[4]);
+$request_uri = explode('/', $filtered_request_uri);
+$request_method = $_SERVER['REQUEST_METHOD'];
+$body = file_get_contents('php://input');
+
+$requested_gateway = strtolower($request_uri[4]);
 
 $id = null;
 
-if (array_key_exists(5, $parts)) {
-    $id = $parts[5] == '' ? null : $parts[5];
+if (array_key_exists(5, $request_uri)) {
+    $id = $request_uri[5] == '' ? null : filter_var($request_uri[5], FILTER_SANITIZE_NUMBER_INT);
 }
 
 $service = null;
@@ -30,9 +34,7 @@ switch ($requested_gateway) {
         break;
 }
 
-$result = $service->process($_SERVER['REQUEST_METHOD'], $id);
+$result = $service->process($request_method, $id, $body);
 $json_result = json_encode($result);
 
-echo '<pre>';
-print_r($json_result);
-echo '</pre>';
+echo $json_result;

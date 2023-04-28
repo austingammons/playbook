@@ -4,55 +4,38 @@ include('../source/object/item.php');
 
 class InventoryService {
 
-    public function get() {
-
-        // new up Item() obj
+    public function get_all() {
 
         return array (
-            [
-                'id' => 123,
-                'name' => 'Paint Sprayer',
-                'is_available' => true,
-                'cost' => 549.99
-            ],
-            [
-                'id' => 142,
-                'name' => 'Car Keys',
-                'is_available' => false,
-                'cost' => 0
-            ],
-            [
-                'id' => 121,
-                'name' => 'Shovel',
-                'is_available' => true,
-                'cost' => 49.99
-            ],
+            new Item(123, 'Paint Sprayer', 549.99, 1, true),
+            new Item(124, 'Brush', 49.19, 4, true),
+            new Item(125, 'Bucket', 11.99, 2, true),
+            new Item(126, 'Eggshell Blue Paint', 39, 8, true),
         );
     }
 
     public function get_by($id) {
         return array (
-            'id' => $id,
-            'name' => 'Paint Sprayer',
-            'is_available' => true,
-            'cost' => 549.99
+            new Item(999, 'Sample Item', 69.00, 1, true),
         );
     }
 
-    public function post($data) {
-        // 
+    public function create($data) {
+        
+        return true;
+
     }
 
-    public function put($data, $id) {
-        // 
-    }
+    public function update($data, $id) {
+        
+        return true;
 
-    public function patch($data, $id) {
-        // 
     }
 
     public function delete($id) {
-        // 
+        
+        return true;
+        
     }
 
 }
