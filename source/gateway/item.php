@@ -1,17 +1,19 @@
 <?php
 
-class InventoryGateway extends BaseGateway {
+class ItemGateway extends BaseGateway {
 
     function __construct() {
 
-        $this->service = new InventoryService();
+        $this->service = new ItemService();
 
     }
 
     public function GET($args) {
 
+
         $copmany_guid = "";
         $inventory_guid = "";
+        $item_guid = "";
 
         if (array_key_exists('company_guid', $args['parameters'])) {
 
@@ -27,12 +29,23 @@ class InventoryGateway extends BaseGateway {
 
             $inventory_guid = $args['parameters']['inventory_guid'];
 
+        } else {
+
+            return $this->error_response(400, get_class(), "required parameter inventory_guid was not provided");
+
         }
 
-        return empty($inventory_guid) == true ? $this->service->get_all($company_guid) : $this->service->get_by($company_guid, $inventory_guid);
+        if (array_key_exists('item_guid', $args['parameters'])) {
+
+            $item_guid = $args['parameters']['item_guid'];
+
+        }
+
+        return empty($item_guid) == true ? $this->service->get_all($company_guid, $inventory_guid) : $this->service->get_by($company_guid, $inventory_guid, $item_guid);
 
     }
 
+    
     public function POST($id, $body) {
 
         $this->has_required_parameters($id, $body);

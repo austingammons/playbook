@@ -2,22 +2,22 @@
 
 include('../source/object/item.php');
 
-class InventoryService {
+class InventoryService extends BaseService {
 
-    public function get_all() {
 
-        return array (
-            new Item(123, 'Paint Sprayer', 549.99, 1, true),
-            new Item(124, 'Brush', 49.19, 4, true),
-            new Item(125, 'Bucket', 11.99, 2, true),
-            new Item(126, 'Eggshell Blue Paint', 39, 8, true),
-        );
+    function get_all($company_guid) {
+        //$company_guid = 'CB1A5313FAC0E4FF0DFB9A82250587FA';
+        $connection = $this->database->get_connection_pdo();
+        $statement = $connection->prepare("SELECT * FROM tbl_inventories WHERE company_guid = :company_guid");
+        $statement->execute(array(':company_guid' => $company_guid));
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    public function get_by($id) {
-        return array (
-            new Item(999, 'Sample Item', 69.00, 1, true),
-        );
+    
+    public function get_by($company_guid, $inventory_guid) {
+        $connection = $this->database->get_connection_pdo();
+        $statement = $connection->prepare("SELECT * FROM tbl_inventories WHERE inventory_guid = :inventory_guid AND company_guid = :company_guid");
+        $statement->execute(array(":inventory_guid" => $inventory_guid, ':company_guid' => $company_guid));
+        return $statement->fetch();
     }
 
     public function create($data) {
