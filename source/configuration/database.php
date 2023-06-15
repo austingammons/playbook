@@ -2,6 +2,8 @@
 
 class Database {
     
+    // use your local creds here to connect to your database
+
     public $host = "localhost";
     public $dbname = "playbook";
     public $username = "root";
